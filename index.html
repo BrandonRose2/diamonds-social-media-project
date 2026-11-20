@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diamond's Creator Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#E91E7A;--bg:#0E0C12;--card:#18151E;--line:#2A2532;--text:#F4F0F6;--grey:#A39BAD;--soft:#221D29}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;
+ background-image:radial-gradient(circle at 15% 0%,rgba(233,30,122,.18),transparent 40%),radial-gradient(circle at 90% 10%,rgba(200,200,255,.08),transparent 35%)}
+.wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}
+h1{font-size:36px;line-height:1.1;margin:0;font-weight:800;letter-spacing:-.02em}
+h1 span{background:linear-gradient(90deg,#fff,#F8BBD9,#E91E7A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-family:"Playfair Display",serif;font-style:italic;color:var(--accent);margin:6px 0 0;font-size:18px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;border:0;border-radius:10px;padding:11px 16px;font:600 14px Inter,sans-serif;cursor:pointer}
+.btn.ghost{background:transparent;border:1.5px solid var(--grey);color:var(--text)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+.card h2{margin:0 0 4px;font-size:20px}
+.hint{color:var(--grey);font-size:14px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+label{font-weight:600;font-size:13px;display:block;margin-bottom:6px}
+select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:15px Inter,sans-serif;background:var(--soft);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--soft);color:var(--text);border-radius:999px;padding:8px 14px;font:500 13px Inter,sans-serif;cursor:pointer}
+.chip.on{border-color:var(--accent);background:rgba(233,30,122,.15);color:#fff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+#plan{display:none}
+.banner{background:linear-gradient(120deg,#2A0F1E,#18151E);border:1px solid #4A1F35;border-radius:16px;padding:24px;margin-bottom:18px}
+.banner h2{margin:0;font-size:24px}.banner p{margin:6px 0 0;color:var(--grey)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font:600 14px Inter,sans-serif;cursor:pointer;color:var(--grey)}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.pane{display:none}.pane.on{display:block}
+ul.tidy{margin:0;padding-left:20px}ul.tidy li{margin:6px 0}
+.pill{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:4px 9px;margin:3px 4px 3px 0;font-size:13px}
+.bio{background:var(--soft);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;font-weight:600;margin-bottom:8px;cursor:pointer}
+.bio:hover{border-left-color:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{background:#000;color:#fff;text-align:left;padding:9px 10px;font-weight:600}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.d{font-weight:700;color:var(--accent);white-space:nowrap}
+.tg{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--grey)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:720px){.two{grid-template-columns:1fr}h1{font-size:30px}td.d{white-space:normal}}
+.warn{background:rgba(233,30,122,.1);border:1px solid #4A1F35;border-radius:12px;padding:14px;font-size:14px}
+.check{padding-left:0}.check li{list-style:none;margin:8px 0}
+.check label{font-weight:500;display:flex;gap:10px;align-items:flex-start}
+.check input{margin-top:4px;accent-color:var(--accent)}
+pre{white-space:pre-wrap;background:var(--soft);padding:12px;border-radius:10px;font:13px/1.5 ui-monospace,Menlo,monospace;margin:0}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header>
+  <div><h1><span>Diamond's Creator Portal</span> 💎</h1><p class="tag">Confident. Unfiltered. Untouchable.</p></div>
+  <a class="btn" href="playbook.pdf" target="_blank" rel="noopener">📄 Open the Playbook PDF</a>
+ </header>
+ <div class="card">
+  <h2>Build your plan</h2>
+  <p class="hint">Pick the content styles that feel most like you (choose 2–4), then your setup.</p>
+  <div class="chips" id="pillars"></div>
+  <div class="grid" style="margin-top:16px">
+   <div><label for="platform">Main platform</label><select id="platform"><option>TikTok</option><option>Instagram Reels</option><option>YouTube Shorts</option></select></div>
+   <div><label for="time">Time per day</label><select id="time"><option value="30">About 30 minutes</option><option value="60" selected>About 1 hour</option><option value="120">2+ hours</option></select></div>
+   <div><label for="paid">Paid page?</label><select id="paid"><option value="later">Not yet: grow first</option><option value="now">Opening it now</option><option value="no">Not doing one</option></select></div>
+  </div>
+  <div class="actions"><button class="btn" id="go">Build my plan →</button></div>
+ </div>
+ <div id="plan">
+  <div class="banner"><h2 id="pTitle"></h2><p id="pSub"></p></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="pane on" data-p="brand">
+   <div class="card"><h2>Your bio</h2><p class="hint">Tap a bio to copy it.</p><div id="bios"></div>
+    <p style="margin:14px 0 6px"><b>Handle ideas</b> (same one everywhere):</p><div id="handles"></div>
+    <p style="margin:14px 0 6px"><b>Hashtags to rotate (3–5 per post):</b></p><div id="tags"></div></div>
+   <div class="two">
+    <div class="card"><h2>Your content mix</h2><p class="hint">What each of your styles looks like.</p><ul class="tidy" id="mix"></ul></div>
+    <div class="card"><h2>Hooks for the first 2 seconds</h2><p class="hint">Fill in the blanks.</p><ul class="tidy" id="hooks"></ul></div>
+   </div>
+  </div>
+  <div class="pane" data-p="calendar">
+   <div class="card"><h2>Your first 30 days</h2><p class="hint" id="calHint"></p>
+    <table><thead><tr><th>Day</th><th>Style</th><th>Video idea</th></tr></thead><tbody id="cal"></tbody></table></div>
+  </div>
+  <div class="pane" data-p="platforms">
+   <div class="card"><h2>Where to post (and the rules)</h2>
+    <table><thead><tr><th>Platform</th><th>Its job</th><th>Rules</th></tr></thead><tbody>
+     <tr><td class="d">TikTok / IG / Shorts</td><td>Get discovered</td><td>Flirty, confident, spicy <i>talk</i>. No nudity, sexual acts, or mentioning/linking adult sites.</td></tr>
+     <tr><td class="d">X (Twitter)</td><td>Promotion and teasers</td><td>Adult content allowed if the account is marked sensitive.</td></tr>
+     <tr><td class="d">Reddit</td><td>Biggest free traffic</td><td>NSFW communities that match your look. Read each one's rules first, since many require verification.</td></tr>
+     <tr><td class="d">OnlyFans / Fansly</td><td>Where the money is</td><td>Subscriptions, pay-per-view messages, tips. ID and age verification required.</td></tr>
+    </tbody></table></div>
+   <div class="warn"><b>Account-saving rule:</b> never write "OnlyFans", "OF", "spicy link" or "18+" on TikTok/IG, and never put an adult link directly in your bio. Use a link page (Beacons, AllMyLinks or Linktree) with a sensitive-content warning.</div>
+  </div>
+  <div class="pane" data-p="money">
+   <div class="card"><h2>How the money builds</h2><table><tbody id="money"></tbody></table></div>
+   <div class="card"><h2>Paid-page tips</h2><ul class="tidy">
+    <li>Messages make more than subscriptions. Send pay-per-view sets and reply on a schedule.</li>
+    <li>Post on your paid page on a schedule so subscribers renew.</li>
+    <li>Send every new subscriber a welcome message with a discounted pay-per-view.</li>
+    <li>Fans don't negotiate your boundaries or your prices. You set both.</li></ul></div>
+   <div class="card"><h2>AI prompts to copy</h2><p class="hint">Paste into ChatGPT or Claude.</p><div id="prompts"></div></div>
+  </div>
+  <div class="pane" data-p="safety">
+   <div class="card"><h2>Safety and setup checklist</h2><p class="hint">Your progress is saved on this device.</p><ul class="check" id="checklist"></ul></div>
+  </div>
+  <div class="actions"><button class="btn ghost" id="copy">Copy my plan as text</button></div>
+ </div>
+ <p class="hint" style="margin-top:30px;font-size:12px">Platform rules change often, so check each app's current guidelines. This is a growth guide, not legal or tax advice.</p>
+</div>
+<div class="toast" id="toast">Copied</div>
+<script>
+const PIL={
+ "Storytime":{d:"Spicy, funny, real dating stories told with attitude. Your strongest format.",
+  ideas:["Worst first date ever","The ex who tried to come back","A DM that had me screaming","The date that went TOO well","My most chaotic night out","The guy who lied about everything"],
+  hooks:["\"Storytime: why I'll never date a ___ again\"","\"This is the worst date I've ever been on and I need witnesses\""],tags:["storytime","datingstories","datingfails"]},
+ "Hot takes":{d:"Bold opinions and red flags that get people arguing in the comments (comments = reach).",
+  ideas:["5 red flags I ignore on purpose","Rating pickup lines","'I'm not like other guys' decoded","Situationships are a scam","Being 'too much' is a flex","Dating app bios decoded"],
+  hooks:["\"I'm about to get banned for saying this, but…\"","\"Unpopular opinion: ___\"","\"Men will literally ___ instead of ___\""],tags:["redflags","hottake","datingadvice"]},
+ "GRWM":{d:"Going-out fits and makeup while you talk. Easy to film, high watch time.",
+  ideas:["GRWM for a first date","Going-out fit check","GRWM while I spill tea","Night-out makeup in 60 seconds","Outfit for a date I don't care about","Date night vs girls' night look"],
+  hooks:["\"Get ready with me for a date I already know is a disaster\"","\"Fit check before I ruin someone's night\""],tags:["grwm","fitcheck","nightout"]},
+ "Confidence":{d:"Owning who you are, clapping back at haters, self-love with an edge.",
+  ideas:["I stopped apologizing for who I am","Clapping back at a hate comment","Things I'll never shrink for","Self-love isn't soft","My confidence routine","Responding to 'you're too much'"],
+  hooks:["\"POV: you finally stopped caring what people think\"","\"Reply to @___: no, I'm not sorry\""],tags:["confidence","selflove","bodypositivity"]},
+ "Ask Diamond":{d:"Answer follower questions on dating, confidence and sex-positivity. Frank, but not explicit on TikTok/IG.",
+  ideas:["Should I text him back?","How to stop caring what people think","Is it a red flag if…","Your spiciest (safe) questions","How to know your worth","Rapid-fire Q&A"],
+  hooks:["\"You asked, I'm answering (and I'm not being nice about it)\"","\"Ask Diamond: ___\""],tags:["askme","datingtips","realtalk"]},
+ "Thirst traps":{d:"Fitted outfits, trending audio, confident energy. Always within app rules, with no nudity or simulated acts.",
+  ideas:["Trending audio transition","Outfit reveal","Slow-mo confidence walk","Before/after glam","Mirror fit check","Lip-sync to a viral sound"],
+  hooks:["\"Rare. Expensive. Unbothered.\"","\"Tell me you're confident without telling me\""],tags:["outfitinspo","glam","baddie"]}
+};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const li=a=>a.map(x=>`<li>${esc(x)}</li>`).join("");
+let chosen=new Set(["Storytime","Hot takes","GRWM"]);
+function drawChips(){$("pillars").innerHTML=Object.keys(PIL).map(k=>`<button class="chip ${chosen.has(k)?"on":""}" data-k="${k}">${k}</button>`).join("")}
+$("pillars").onclick=e=>{const b=e.target.closest(".chip");if(!b)return;const k=b.dataset.k;chosen.has(k)?chosen.delete(k):chosen.add(k);drawChips()};
+function build(){
+ if(!chosen.size){toast("Pick at least one style");return}
+ const ks=[...chosen],plat=$("platform").value,time=+$("time").value,paid=$("paid").value;
+ try{localStorage.setItem("diamondPortal",JSON.stringify({ks,plat,time,paid}))}catch(e){}
+ $("pTitle").textContent="Diamond's plan 💎";
+ $("pSub").textContent=`${ks.join(" · ")} on ${plat}. ${time>=60?"1–2 posts a day":"1 post a day"} for 90 days.`;
+ const bios=["Rare. Expensive. Unbothered. 💎 Dating stories + hot takes daily","Your favorite bad influence 💎 Storytimes, red flags & confidence","Diamond 💎 Saying what everyone's thinking. Link for more ⬇️"];
+ $("bios").innerHTML=bios.map(b=>`<div class="bio" data-cp="${esc(b)}">${esc(b)}</div>`).join("");
+ $("handles").innerHTML=["@itsdiamond","@diamond.unfiltered","@yourfavdiamond","@diamondafterhours","@thediamondfiles"].map(h=>`<span class="pill">${h}</span>`).join("");
+ const tags=new Set(["dating","fyp"]);ks.forEach(k=>PIL[k].tags.forEach(t=>tags.add(t)));
+ $("tags").innerHTML=[...tags].map(t=>`<span class="pill">#${t}</span>`).join("");
+ $("mix").innerHTML=ks.map(k=>`<li><b>${k}</b>: ${esc(PIL[k].d)}</li>`).join("");
+ $("hooks").innerHTML=li(ks.flatMap(k=>PIL[k].hooks).concat(["\"Stay rare 💎\" (end every video with this)"]));
+ const rows=[];for(let i=0;i<30;i++){const k=ks[i%ks.length];const idea=(i+1)%7===0?"Go LIVE or post a reply-to-comment video, then review your stats":PIL[k].ideas[Math.floor(i/ks.length)%6];
+  rows.push(`<tr><td class="d">${i+1}</td><td><span class="tg">${(i+1)%7===0?"Weekly":k}</span></td><td>${esc(idea)}</td></tr>`)}
+ $("cal").innerHTML=rows.join("");
+ $("calHint").textContent=`Film 7–10 in one session each week, schedule them for about 7–10pm, and repost every video on ${["TikTok","Instagram Reels","YouTube Shorts"].filter(p=>p!==plat).join(" and ")}.`;
+ const m=[["From day 1","Affiliate links for products you already use: outfits, makeup, ring lights (TikTok Shop, Amazon)."],
+  ["~2–5k followers",paid==="no"?"Brand-friendly route: UGC videos for fashion and beauty brands, plus affiliate links.":"Open your paid page: start free (to build a list) or low-priced, and earn mostly from pay-per-view messages and tips."],
+  ["10k+","Brand deals from fashion, beauty, dating-app and nightlife brands. Customs at your own prices."+(paid==="no"?"":" Grow X and Reddit to keep sending buyers to your page.")]];
+ if(paid==="now")m.unshift(["This week","Open your page now and post previews on X/Reddit. Keep TikTok/IG 100% within the rules."]);
+ $("money").innerHTML=m.map(r=>`<tr><td class="d">${r[0]}</td><td>${esc(r[1])}</td></tr>`).join("");
+ const pr=[`Give me 30 ${plat} video ideas for a bold, confident, sex-positive dating creator named Diamond. Styles: ${ks.join(", ")}. Each needs a scroll-stopping hook under 12 words and must follow ${plat}'s community guidelines.`,
+  `Write a 45-second storytime script about "${PIL[ks[0]].ideas[0]}" in a sassy, unapologetic voice. Hook in 2 seconds, end with "Stay rare."`,
+  `Write 5 flirty but platform-safe captions with 4 hashtags each for a "${PIL[ks[ks.length-1]].ideas[1]}" video.`,
+  `Here are my last 5 videos with views and watch time: [paste]. What's working, and what should I post next?`];
+ $("prompts").innerHTML=pr.map((x,i)=>`<pre id="pr${i}">${esc(x)}</pre><div style="margin:6px 0 14px"><button class="btn ghost" style="padding:6px 12px;font-size:13px" data-cp-id="pr${i}">Copy prompt</button></div>`).join("");
+ const ck=["Pick a handle and lock it on TikTok, IG, X and Reddit","New email + Google Voice number just for Diamond","Never link your real name, family or job accounts","Turn off location tags and scrub photo location data","Check every shot: no windows with views, house numbers, car plates or landmarks","Make a link page with a sensitive-content warning","Write down your boundaries (what you will and won't do) before you post",
+  ...(paid==="no"?[]:["Geo-block your state on your paid page","Separate bank account for creator income"]),"Watermark all content with your handle","Set aside 25–30% of earnings for taxes","Film your first 7 videos in one session","Never meet fans in person"];
+ let saved={};try{saved=JSON.parse(localStorage.getItem("diamondCheck")||"{}")}catch(e){}
+ $("checklist").innerHTML=ck.map((x,i)=>`<li><label><input type="checkbox" data-c="${esc(x)}" ${saved[x]?"checked":""}><span>${esc(x)}</span></label></li>`).join("");
+ $("checklist").onchange=e=>{saved[e.target.dataset.c]=e.target.checked;try{localStorage.setItem("diamondCheck",JSON.stringify(saved))}catch(_){}};
+ window._p={ks,plat};
+ $("plan").style.display="block";$("plan").scrollIntoView({behavior:"smooth"});
+}
+const T=[["brand","Brand & hooks"],["calendar","30-day calendar"],["platforms","Platforms & rules"],["money","Money & AI"],["safety","Safety checklist"]];
+$("tabs").innerHTML=T.map((x,i)=>`<button class="tab ${i?"":"on"}" data-t="${x[0]}">${x[1]}</button>`).join("");
+$("tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b));document.querySelectorAll(".pane").forEach(p=>p.classList.toggle("on",p.dataset.p===b.dataset.t))};
+document.addEventListener("click",e=>{const a=e.target.closest("[data-cp]");if(a)cp(a.dataset.cp);const b=e.target.closest("[data-cp-id]");if(b)cp($(b.dataset.cpId).textContent)});
+$("go").onclick=build;
+function toast(t){$("toast").textContent=t||"Copied";$("toast").classList.add("on");setTimeout(()=>$("toast").classList.remove("on"),1600)}
+function cp(t){navigator.clipboard.writeText(t).then(()=>toast()).catch(()=>toast("Copy blocked: select and copy manually"))}
+$("copy").onclick=()=>{if(!window._p)return;cp(`DIAMOND'S PLAN (${_p.plat})\nStyles: ${_p.ks.join(", ")}\n\n30-DAY CALENDAR\n`+[...$("cal").rows].map(r=>`Day ${r.cells[0].textContent}: ${r.cells[2].textContent}`).join("\n"))};
+try{const s=JSON.parse(localStorage.getItem("diamondPortal")||"null");if(s){chosen=new Set(s.ks);$("platform").value=s.plat;$("time").value=s.time;$("paid").value=s.paid;drawChips();build()}else drawChips()}catch(e){drawChips()}
+</script>
+</body>
+</html>
